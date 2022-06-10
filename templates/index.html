@@ -36,6 +36,8 @@
         .menu-item a:hover {
             color: #d27c02;
         }
+
+        .menu-item > a.active { color: #16a1ff; }
         
         .bg-dark {
             background-color: #002729 !important;
@@ -72,13 +74,10 @@
             color: #d27c02 !important;
         }
         
-        .is-dark .menu-item a .active,
-        .is-dark .menu-item a:hover {
-            color: #ffb000;
-        }
+        .menu-item > a.active { color: #002729 !important; }
         
         .navbar-toggle.navbar-active {
-            color: #16a1ff;
+            color: #002729;
             position: relative;
             z-index: 49;
         }
@@ -124,6 +123,22 @@
             background: transparent;
             box-shadow: inset 0 0 0 2px #ffb000;
         }
+
+        .token-stage-title { color: #fff; background: #ffb000; text-transform: uppercase; font-weight: 700; line-height: 26px; padding: 10px; border-radius: 6px 6px 0 0; }
+
+        .token-stage-pre { background: #ffb000; }
+
+        .social-icon { width: 32px; height: 32px; line-height: 32px; border-radius: 50%; transition: 0.3s; color: #fff; background: #ffb000; }
+        .social li a:hover .social-icon { background: #d27c02; color: #fff; }
+        .roadmap-s1.roadmap-done:before, .roadmap-s1.roadmap-done:after { border-color: #ffb000; }
+
+        .roadmap-s1.roadmap-done:before, .roadmap-s1.roadmap-done:after { border-color: #ffb000; }
+        
+        .btn-grad { border: none; background-image: linear-gradient(to right, #ffb000 0%, #d27c02 100%); }
+
+        .btn-grad:before { position: absolute; left: 0; top: 0; content: ""; width: 100%; height: 100%; z-index: -2; border-radius: 5px; opacity: 0; transition: all .5s; background-image: linear-gradient(to right, #d27c02 0%, #ffb000 100%); }  
+
+.roadmap-s1.roadmap-current:before { border-color: #ffb000; }
     </style>
     <!-- logo dark = 002729 -->
     <!-- logo orange = ffb000 -->
