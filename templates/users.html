@@ -1,0 +1,102 @@
+{% extends '/layout/main.html' %}
+{% block _content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="display-4 mb-3">Users</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addusers">
+            Add Users
+        </button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Lengkap</th>
+                    <th>Username</th>
+                    <th>Link</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ d.nama_lengkap }}</td>
+                    <td>{{ d.username }}</td>
+                    <td><a href="https:/trvltoken.io/{{ d.username }}">trvltoken.io/{{ d.username }}</a></td>
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm">Lihat</a>
+                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                        <button onclick="deleteUser('{{ d.id }}')" class="btn btn-danger btn-sm">Hapus</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addusers" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Users</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
+                            placeholder="Isikan Nama Lengkap">
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username / URL</label>
+                        <div class="input-group">
+                            <span class="input-group-text">https://trvltoken.io/</span>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Isikan Password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Konfirmasi Password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                            placeholder="Isikan Password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block _script %}
+    <script>
+        function deleteUser(uid) {
+            var hapus = confirm('Apakah anda yakin hapus User ?')
+            if (hapus) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_for('usersapp.delete_user') }}",
+                    data: {"uid": uid},
+                    success : function() {
+                        location.reload()
+                        
+                    }
+                })
+            }
+        }
+    </script>
+{% endblock %}

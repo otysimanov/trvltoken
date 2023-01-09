@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, session, flash, redirect,
 from backend.db import db
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+from firebase_admin import firestore
 
 authapp = Blueprint('authapp', __name__)
 
@@ -60,14 +61,37 @@ def login():
             else:
                 flash('maaf password anda salah', 'danger')
                 return redirect(url_for('.login'))
-        else:
+        else:   
             flash('username tidak terdaftar', 'danger')
             return redirect(url_for('.login'))
 
+    if 'user' in session:
+        return redirect(url_for('.dashboard'))
     return render_template('login.html')
 
 
 @authapp.route('/logout', methods=["GET"])
 def logout():
     session.clear()
+    flash('Anda Keluar', 'danger')
     return redirect(url_for('.login'))
+
+
+# @authapp.route('/register')
+# def register():
+#     data = {
+#         'created_at': firestore.SERVER_TIMESTAMP,
+#         'username': 'admin',
+#         'nama_lengkap': 'administrator',
+#         'password': generate_password_hash('administrator123', 'sha256'),
+#         'role': 'admin'
+
+#     }
+
+#     db.collection('users').document('admin').set(data)
+#     return "oke"
+
+@authapp.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')

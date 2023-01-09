@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg bg-dark text-light">
+    <div class="container">
+        <a class="navbar-brand text-light" href="#">
+            <img src="/img/logo-full-orange.png" width="200px" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if 'user' in session %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">Dashboard</a>
+                </li>
+                {% if  session['user']['role'] == 'admin' %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{{ url_for('usersapp.all_users') }}">Users</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{{ url_for('usersapp.all_link') }}">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-danger text-light" href="/logout">Logout</a>
+                </li>
+                {% else %}
+
+                
+                <li class="nav-item">
+                    <a class="nav-link btn btn-warning text-light" href="#">Login</a>
+                </li>
+
+                {% endif %}
+                
+            </ul>
+        </div>
+    </div>
+</nav>

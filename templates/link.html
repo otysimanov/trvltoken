@@ -1,0 +1,89 @@
+{% extends 'layout/main.html' %}
+
+{% block _content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="display-4 mb-3">Manajemen Link</h1>
+    </div>
+    <div class="col-12">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addlink">
+            Add Link
+        </button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>URL</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ d.title }}</td>
+                    <td>
+                        <a href="{{ d.url }}">{{ d.url }}</a>
+                    </td>
+                    <td>
+                        
+                        
+                        <button onclick="deleteLink('{{ d.id }}')" class="btn btn-danger">Hapus</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="addlink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="" method="post">
+                <div class="modal-header bg-primary text-light">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Link</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                            placeholder="Isikan title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="url" class="form-label">URL</label>
+                        <input type="text" class="form-control" id="url" name="url"
+                            placeholder="cth : https://telegram.com/abc123">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block _script %}
+    <script>
+        function deleteLink(uid) {
+            var hapus = confirm('Apakah anda yakin hapus Link ?')
+            if (hapus) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_for('usersapp.hapus_link') }}",
+                    data: {"uid": uid},
+                    success : function() {
+                        location.reload()
+                        
+                    }
+                })
+            }
+        }
+    </script>
+{% endblock %}
