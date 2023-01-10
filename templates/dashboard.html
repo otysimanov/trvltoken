@@ -1,4 +1,37 @@
 {% extends '/layout/main.html' %}
 {% block _content %}
-<h1>Ini adalah halaman Dashboard</h1>
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <h1>Dashboard</h1>
+        <p class="lead">Halo Selamat Datang <b>{{ session['user']['username'] }} !</b></p>
+        <div class="input-group my-3">
+            <input type="text" class="form-control" value="https://trvltoken.io/{{ session['user']['username'] }}" disabled id="link-copy">
+            <button onclick="copyValue()" class="input-group-button btn btn-primary" id="copy">Salin Link</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block _script %}
+<script>
+    function copyValue() {
+        // Get the text field
+        var copyText = document.getElementById("link-copy");
+        var tombol = document.getElementById('copy')
+        
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+        
+        // Alert the copied text
+        tombol.innerHTML = 'Berhasil !!'
+        tombol.classList.remove('btn-primary')
+        tombol.classList.add('btn-success')
+        tombol.setAttribute('disabled', '')
+}
+</script>
 {% endblock %}

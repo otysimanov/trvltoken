@@ -47,6 +47,7 @@ def all_users():
 
 @usersapp.route('/users/hapus',methods=['POST'])
 @login_required
+@admin_required
 def delete_user():
     if request.method =='POST':
         uid = request.form.get('uid')
@@ -60,6 +61,21 @@ def delete_user():
 
         flash('Berhasil Hapus User', 'danger')
         return ('', 204)
+
+@usersapp.route('/users/resetpassword', methods=['POST'])
+@login_required
+@admin_required
+def reset_password():
+    if request.method == 'POST':
+        uid = request.form.get('uid')
+        data = {
+            'password': generate_password_hash('trvltoken123', 'sha256')
+        }
+
+        db.collection('users').document(uid).update(data)
+        flash('Berhasil Reset Password : <b>trvltoken123</b>', 'success')
+        return ('', 204)
+
 
 
 

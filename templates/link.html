@@ -9,32 +9,38 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addlink">
             Add Link
         </button>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Title</th>
-                    <th>URL</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for d in data %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ d.title }}</td>
-                    <td>
-                        <a href="{{ d.url }}">{{ d.url }}</a>
-                    </td>
-                    <td>
-                        
-                        
-                        <button onclick="deleteLink('{{ d.id }}')" class="btn btn-danger">Hapus</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Title</th>
+                        <th>URL</th>                        
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in data %}
+                    <tr>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
+                        </td>
+                        <td>{{ d.title }}</td>
+                        <td>
+                            <a href="{{ d.url }}">{{ d.url }}</a>
+                        </td>
+                        <td>
+                            
+                            
+                            <button onclick="deleteLink('{{ d.id }}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-dark text-light">
     <div class="container">
-        <a class="navbar-brand text-light" href="#">
+        <a class="navbar-brand text-light" href="{{ url_for('authapp.dashboard') }}">
             <img src="/img/logo-full-orange.png" width="200px" alt="">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler bg-warning" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,7 +11,7 @@
             <ul class="navbar-nav ms-auto">
                 {% if 'user' in session %}
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Dashboard</a>
+                    <a class="nav-link text-light" href="{{ url_for('authapp.dashboard') }}">Dashboard</a>
                 </li>
                 {% if  session['user']['role'] == 'admin' %}
                 <li class="nav-item">
