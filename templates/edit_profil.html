@@ -1,0 +1,48 @@
+{% extends 'layout/main.html' %}
+
+{% block _content %}
+<div class="row">
+    <div class="col-12 mb-5">
+        <h1 class="display-4">Edit Profil</h1>
+    </div>
+    <div class="col-12 pb-2">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
+                    placeholder="Isikan Nama Lengkap" required value="{{ user['nama_lengkap'] or '' }}">
+            </div>
+            <div class="mb-3">
+                <label for="jabatan" class="form-label">Jabatan</label>
+                <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Isikan Jabatan" value="{{ user['jabatan'] or '' }}"
+                    required>
+            </div>
+            <div class="row mb-3">
+                <div class="col-1">
+                    <img src="{{ user['foto'] or '/img/foto-4.png' }}" class="rounded-circle" width="100px" alt="">
+                </div>
+                <div class="col-11">
+                    <label for="foto" class="form-label">Foto Profil</label>
+                    <input class="form-control" type="file" id="foto" name="foto">
+
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="about_me" class="form-label">Tentang Saya</label>
+                <textarea class="form-control" name="about_me" id="about_me"  rows="3" required>{{ user['about_me'] or '' }}</textarea>
+            </div>
+            <button class="w-100 btn btn-primary">Submit</button>
+        </form>
+
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block _script %}
+<script>
+
+</script>
+{% endblock %}

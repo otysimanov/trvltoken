@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, session, flash, redirect,
 from firebase_admin import firestore
 from werkzeug.security import generate_password_hash
 from backend.auth import admin_required, login_required
-from backend.db import get_all_collection, db, get_all_subcollection
+from backend.db import get_all_collection, db, get_all_subcollection, storage
 
 usersapp = Blueprint('usersapp', __name__)
 
@@ -115,3 +115,39 @@ def hapus_link():
         db.collection('users').document(session['user']['username']).collection('link').document(uid).delete()
         flash('Berhasil Hapus Link', 'danger')
         return ('', 204)
+
+
+@usersapp.route('/edit-profile', methods=['POST', 'GET'])
+@login_required
+def edit_profil():
+    if request.method == 'POST':
+        data = {
+            'is_edit': True
+        }
+        
+        needed = ['nama_lengkap', 'jabatan', 'about_me']
+        for need in needed:
+            if need in request.form and request.form[need]:
+                data[need] = request.form[need]
+
+        if 'foto' in request.files and request.files['foto']:
+            image = request.files['foto']
+            ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+            filename = image.filename
+            lokasi = f"profil/{filename}"
+            ext = filename.rsplit('.', 1)[1].lower()
+            if ext in ALLOWED_EXTENSIONS:
+                storage.child(lokasi).put(image)
+                data['foto'] = storage.child(lokasi).get_url(None)
+            else:
+                flash("Foto tidak diperbolehkan", "danger")
+                return redirect(url_for('.edit_profil'))
+        
+        db.collection('users').document(session['user']['id']).set(data, merge=True)
+        flash('Berhasil Update Profil', 'success')
+        session['user']['is_edit'] = True
+        return redirect(url_for('.edit_profil'))
+
+    user = db.collection('users').document(session['user']['id']).get().to_dict()
+
+    return render_template('edit_profil.html', user=user)

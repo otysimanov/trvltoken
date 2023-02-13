@@ -8,16 +8,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GWZ7SC2TQL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GWZ7SC2TQL');
+</script>
 </head>
 
 <body class="bg-dark">
     <div class="container pt-5">
         <div class="row justify-content-center">
             <div class="col-md-6 col-12 text-center">
-                <img src="/img/logo-2.png" width="150px" alt="">
+                <img src="{{ user.foto or '/img/logo-2.png' }}" class="rounded-circle" width="150px" alt="">
             </div>
             <div class="col-12 my-4 text-center">
-                <h3 class="text-light">@{{ user.username }}</h3>
+                <h3 class="text-light">{{ user.nama_lengkap }}</h3>
+                <p class="text-light">{{ user.about_me }}</p>
             </div>
         </div>
         <div class="row justify-content-center">
